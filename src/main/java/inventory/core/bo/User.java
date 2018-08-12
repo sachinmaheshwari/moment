@@ -16,10 +16,15 @@ package inventory.core.bo;
  * limitations under the License.
  */
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+
 public class User {
   String id;
   String name;
   String employeeId;
+  private List<Item> allocatedItems;
 
   public String getId() {
     return id;
@@ -43,5 +48,16 @@ public class User {
 
   public void setEmployeeId(String employeeId) {
     this.employeeId = employeeId;
+  }
+
+  public List<Item> getAllocatedItems() {
+    return Collections.unmodifiableList(this.allocatedItems);
+  }
+
+  public void allocate(Item item) {
+    if (allocatedItems == null) {
+      allocatedItems = new ArrayList<>();
+    }
+    this.allocatedItems.add(item);
   }
 }

@@ -1,4 +1,4 @@
-package inventory.core;
+package inventory.core.usecases;
 
 /*
  * Copyright (c) 2018 Sachin Maheshwari
@@ -16,15 +16,22 @@ package inventory.core;
  * limitations under the License.
  */
 
+import inventory.core.Gateway;
 import inventory.core.bo.Item;
 import inventory.core.bo.User;
 
-public interface Gateway {
-  Item save(Item newItem);
+public class AllocateItemUseCase {
 
-  User save(User user);
+  private final Gateway gateway;
 
-  Item findItemById(String itemId);
+  public AllocateItemUseCase(Gateway gateway) {
+    this.gateway = gateway;
+  }
 
-  User findUserById(String userId);
+  public void allocate(String itemId, String userId) {
+    Item item = gateway.findItemById(itemId);
+    User user = gateway.findUserById(userId);
+    user.allocate(item);
+  }
+
 }

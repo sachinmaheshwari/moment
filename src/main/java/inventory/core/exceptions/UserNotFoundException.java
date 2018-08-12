@@ -1,4 +1,4 @@
-package inventory.core;
+package inventory.core.exceptions;
 
 /*
  * Copyright (c) 2018 Sachin Maheshwari
@@ -16,15 +16,10 @@ package inventory.core;
  * limitations under the License.
  */
 
-import inventory.core.bo.Item;
-import inventory.core.bo.User;
+public class UserNotFoundException extends RuntimeException {
 
-public interface Gateway {
-  Item save(Item newItem);
 
-  User save(User user);
-
-  Item findItemById(String itemId);
-
-  User findUserById(String userId);
+  public UserNotFoundException(String userId) {
+    super("No user found for id: " + userId);
+  }
 }

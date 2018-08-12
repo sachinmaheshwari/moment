@@ -19,14 +19,16 @@ package inventory.core.usecases.mocks;
 import inventory.core.Gateway;
 import inventory.core.bo.Item;
 import inventory.core.bo.User;
+import inventory.core.exceptions.ItemNotFoundException;
+import inventory.core.exceptions.UserNotFoundException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
 public class MockGateway implements Gateway {
 
-  List<Item> itemList = new ArrayList<>();
-  List<User> userList = new ArrayList<>();
+  private List<Item> itemList = new ArrayList<>();
+  private List<User> userList = new ArrayList<>();
 
   @Override
   public Item save(Item newItem) {
@@ -40,5 +42,15 @@ public class MockGateway implements Gateway {
     user.setId(UUID.randomUUID().toString());
     userList.add(user);
     return user;
+  }
+
+  @Override
+  public Item findItemById(String itemId) {
+    return itemList.parallelStream().filter(i -> i.getId().equals(itemId)).findAny().orElseThrow(() -> new ItemNotFoundException(itemId));
+  }
+
+  @Override
+  public User findUserById(String userId) {
+    return userList.parallelStream().filter(user -> user.getId().equals(userId)).findAny().orElseThrow(() -> new UserNotFoundException(userId));
   }
 }
