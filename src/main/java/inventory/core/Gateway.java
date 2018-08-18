@@ -20,6 +20,7 @@ import inventory.core.bo.Item;
 import inventory.core.bo.User;
 
 public interface Gateway {
+
   Item save(Item newItem);
 
   User save(User user);
@@ -27,4 +28,5 @@ public interface Gateway {
   Item findItemById(String itemId);
 
   User findUserById(String userId);
+
 }
