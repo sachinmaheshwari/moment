@@ -21,6 +21,7 @@ import java.util.Collections;
 import java.util.List;
 
 public class User {
+
   String id;
   String name;
   String employeeId;
@@ -55,9 +56,11 @@ public class User {
   }
 
   public void allocate(Item item) {
+    item.allocate(this);
     if (allocatedItems == null) {
       allocatedItems = new ArrayList<>();
+
+      this.allocatedItems.add(item);
     }
-    this.allocatedItems.add(item);
   }
 }

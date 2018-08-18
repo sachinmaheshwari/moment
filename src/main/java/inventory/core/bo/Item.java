@@ -16,11 +16,14 @@ package inventory.core.bo;
  * limitations under the License.
  */
 
+import inventory.core.exceptions.ItemAlreadyAllocatedException;
+
 public class Item {
 
   private String id;
   private String name;
   private String serialNumber;
+  private Boolean isAllocated;
 
   public String getId() {
     return id;
@@ -44,5 +47,22 @@ public class Item {
 
   public void setSerialNumber(String serialNumber) {
     this.serialNumber = serialNumber;
+  }
+
+  public Boolean isAllocated() {
+    return isAllocated;
+  }
+
+  public void setAllocated(Boolean allocated) {
+    isAllocated = allocated;
+  }
+
+  public void allocate(User user) {
+    if (isAllocated){
+      throw new ItemAlreadyAllocatedException("This item is already allocated : " + getId());
+    } else {
+      setAllocated(Boolean.TRUE);
+    }
+
   }
 }

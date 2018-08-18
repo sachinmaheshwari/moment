@@ -33,6 +33,7 @@ public class MockGateway implements Gateway {
   @Override
   public Item save(Item newItem) {
     newItem.setId(UUID.randomUUID().toString());
+    newItem.setAllocated(Boolean.FALSE);
     itemList.add(newItem);
     return newItem;
   }

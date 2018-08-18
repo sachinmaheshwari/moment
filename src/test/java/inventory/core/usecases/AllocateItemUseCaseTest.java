@@ -5,6 +5,7 @@ import static org.junit.Assert.*;
 import inventory.core.Gateway;
 import inventory.core.bo.Item;
 import inventory.core.bo.User;
+import inventory.core.exceptions.ItemAlreadyAllocatedException;
 import inventory.core.exceptions.ItemNotFoundException;
 import inventory.core.exceptions.UserNotFoundException;
 import inventory.core.usecases.mocks.MockGateway;
@@ -34,11 +35,13 @@ public class AllocateItemUseCaseTest {
   private User user;
   private Item item;
   private AllocateItemUseCase useCase;
+  private User userTwo;
 
   @Before
   public void setUp() throws Exception {
     gateway = new MockGateway();
     user = gateway.save(new User());
+    userTwo = gateway.save(new User());
     item = gateway.save(new Item());
     useCase = new AllocateItemUseCase(gateway);
   }
@@ -66,4 +69,11 @@ public class AllocateItemUseCaseTest {
         .filter(i -> i.getId().equals(item.getId())).findAny();
     assertTrue(allocatedItem.isPresent());
   }
+
+  @Test(expected = ItemAlreadyAllocatedException.class)
+  public void testAlreadyAllocatedItem() {
+    useCase.allocate(item.getId(), user.getId());
+    useCase.allocate(item.getId(), userTwo.getId());
+  }
+
 }

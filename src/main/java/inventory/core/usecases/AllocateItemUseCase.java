@@ -19,6 +19,7 @@ package inventory.core.usecases;
 import inventory.core.Gateway;
 import inventory.core.bo.Item;
 import inventory.core.bo.User;
+import inventory.core.exceptions.ItemAlreadyAllocatedException;
 
 public class AllocateItemUseCase {
 
